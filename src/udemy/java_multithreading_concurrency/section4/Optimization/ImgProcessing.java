@@ -7,10 +7,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Optimizing latency (time to perform a task).
+ *
+ * In this example we optimize the time it takes to perform a task, in this case image processing, by rendering
+ *  different sectors of an image in parallel.
+ *
+ *  Remember that this only makes sense if the task is big enough that offsets the overhead of having multi-threads
+ *  (in this case if the image is big enough, otherwise we might notice the single threaded runs are more effective)
+ *   and if the number of threads is at most the number of cores we have available so that they run effectively in parallel.
+ */
 public class ImgProcessing
 {
-    public static final String SOURCE = "./img/in3.jpg";
-    public static final String DEST   = "./img/out3-neg.jpg";
+    public static final String SOURCE = "./rsc/img/in3.jpg";
+    public static final String DEST   = "./rsc/img/out3-neg.jpg";
 
     public static void main(String[] args) throws IOException, InterruptedException {
         BufferedImage original = ImageIO.read(new File(SOURCE));
