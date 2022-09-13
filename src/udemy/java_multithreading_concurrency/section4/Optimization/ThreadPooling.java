@@ -24,7 +24,7 @@ import java.util.concurrent.Executors;
 public class ThreadPooling
 {
     private static final String INPUT = "./rsc/war_and_peace.txt";
-    private static final int NO_OF_THREADS = 1;
+    private static final int NO_OF_THREADS = 16;
 
     public static void main(String[] args) throws IOException
     {
