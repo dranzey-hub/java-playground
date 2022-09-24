@@ -1,0 +1,92 @@
+# Atomic Operations
+
+As seen in exercise 1, even what seems like a simple single operation as an increment or decrement (++, --)
+is actually not an atomic operation, in fact most operations are not atomic.
+
+A few atomic operations are:
+
+    Reference assignments*
+- ObjA = ObjB
+- return obj
+
+        ...this means getters and setters are usually safe.
+
+*All assignments to primitive types are safe EXCEPT long and double. This is because a 32 bit computer might assign
+any of these 64 bit primitives in 2 steps.
+
+For these cases we can use the volatile approach:
+volatile long x = 9999999;
+volatile long y = 8888888;
+x = y;
+
+Volatile makes a variable to not be cached locally and instead be read directly from the memory
+
+For atomic safe classes see java.util.concurrent.atomic
+
+
+---
+
+
+# Race Condition vs Data Race
+
+As opposed to a Race Condition (2+ threads that could access same resources), the Data Race problem arises
+because compilers and CPUs may execute instructions Out of Order for optimization purposes. (See exercise 2: DataRace).
+
+This happens when the instructions don't directly depend on each other (e.g. a=1; b=a;) and so the compiler
+is free to re-arrange the order.
+
+This can be fixed by the same solutions in race conditions: Synchronization blocks and/or Volatile variables.
+Note on exercise 2 there is no race condition, only a data race:
+- Synchronized blocks solves both kind of problems.
+- Volatile solves all data races by guaranteeing order (also solves the double/long read/writes)
+
+
+---
+
+
+# Deadlock
+
+Circular dependency between threads such that one is locking the other and viceversa. Such conditions are usually
+unrecoverable.
+
+Example:
+
+Thread1             Thread2
+-------             -------
+lock(A)             lock(B)
+lock(B)             lock(A)
+ {del(A,item)        {del(B,item)
+  add(B,item)}        add(A,item)}
+unlock(B)           unlock(A)
+unlock(A)           unlock(B)
+
+It could be that the order of events:
+1. Thread1 locks A
+2. Thread2 locks B
+3. Thread1 attempts to lock B but it's already locked, so it waits for B to be released.
+4. Thread2 is in same situation with A... Thread1 and Thread2 are deadlocked
+
+See exercise 3 for an example.
+
+
+    Conditions for deadlock
+Mutual Exclusion  -  Only one thread can have exclusive access to a resource.
+Hold and Wait  -  At least one thread is holding a resource and is waiting for another resource.
+Non-preemptive allocation  -  A resource is released only when a thread is done using it.
+Circular wait  -  Like we saw on our exercise 3.
+
+    Solutions for deadlock
+If we can eliminate at least one of the above conditions we can get rid of deadlocks.
+
+The easiest one is the circular dependency by enforcing an order of lock acquisition.
+E.g:
+Thread1             Thread2
+-------             -------
+lock(A)             lock(A)
+lock(B)             lock(B)
+...                 ...
+
+
+...not that easy with many locks on different places, so we could use other techniques like:
+Watchdogs for deadlock detection.
+
