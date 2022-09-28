@@ -1,0 +1,17 @@
+    Inter-thread communication
+
+Semaphores (these can actually allow multiple threads, so not the same as a lock, but can be used to signal when a
+thread can awake and put to sleep threads (when .acquire() returns false)), Lock implementations and the Object
+notify(), notifyAll() and await()
+
+        Object signaling vs. condition vars:
+
+Object signaling        |       Condition vars
+-------------------------------------------------------
+synchronized(object) {  |   lock.lock()
+}                       |   lock.unlock()
+object.wait()           |   condition.await()
+object.notify()         |   condition.signal()
+object.notifyAll()      |   condition.signalAll()
+
+
