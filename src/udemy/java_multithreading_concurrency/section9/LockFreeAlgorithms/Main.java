@@ -13,8 +13,8 @@ import java.util.concurrent.locks.LockSupport;
  */
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        //StandardStack<Integer> stack = new StandardStack<>();
-        LockFreeStack<Integer> stack = new LockFreeStack<>();
+        StandardStack<Integer> stack = new StandardStack<>();
+        //LockFreeStack<Integer> stack = new LockFreeStack<>();
         Random random = new Random();
 
         for (int i = 0; i < 100000; i++) {

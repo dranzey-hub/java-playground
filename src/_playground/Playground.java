@@ -8,12 +8,22 @@ public class Playground {
 
     public static void main(String[] args) throws InterruptedException
     {
+        /**
+         * Data race? i don't think so...
+         */
+        /*
         Thread thread = new MyThread();
 
         thread.start();
 
         number = 42;
-        ready = true;
+        ready = true;*/
+
+        /**
+         * Get instance type of primitive elements
+         */
+        int x=1;
+        System.out.println(((Object)x).getClass().getSimpleName());
     }
 
 

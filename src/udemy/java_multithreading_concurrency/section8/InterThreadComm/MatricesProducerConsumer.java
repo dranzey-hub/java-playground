@@ -18,7 +18,7 @@ public class MatricesProducerConsumer {
     private static final String OUTPUT_FILE = "./out/matrices_results.txt";
     private static final int N = 10;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException,InterruptedException {
         ThreadSafeQueue threadSafeQueue = new ThreadSafeQueue();
         File inputFile = new File(INPUT_FILE);
         File outputFile = new File(OUTPUT_FILE);
@@ -26,8 +26,12 @@ public class MatricesProducerConsumer {
         MatricesReaderProducer matricesReader = new MatricesReaderProducer(new FileReader(inputFile), threadSafeQueue);
         MatricesMultiplierConsumer matricesConsumer = new MatricesMultiplierConsumer(new FileWriter(outputFile), threadSafeQueue);
 
+        long start = System.currentTimeMillis();
+
         matricesConsumer.start();
-        matricesReader.start();
+        matricesReader.start(); matricesConsumer.join();
+
+        System.out.println("time: "+(System.currentTimeMillis()-start));
     }
 
     private static class MatricesMultiplierConsumer extends Thread {
