@@ -38,6 +38,11 @@ public class ContainsDuplicate
         }
         return false;
 */
+        /**
+         * streams
+         *      not very efficient either but better than 1st approach
+         */
+        //return Arrays.stream(nums).distinct().count() == nums.length? false : true;
 
         /**
          * using map
@@ -70,7 +75,7 @@ public class ContainsDuplicate
 
         /**
          * Sorting first
-         *
+         *      not as efficient as with maps
          */
         Arrays.sort(nums);
         for(int i=0; i<nums.length-1; i++)
