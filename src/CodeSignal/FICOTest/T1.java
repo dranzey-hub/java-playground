@@ -22,6 +22,7 @@ public class T1
             System.out.println("finally");
         }
 
+        //System.out.println("unreachable statement");
     }
 
 
